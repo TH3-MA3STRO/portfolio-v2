@@ -5,7 +5,8 @@ import { Loader2, ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
-const gh_token = process.env.GITHUB_TOKEN!
+const gh_token = process.env.NEXT_PUBLIC_GITHUB_TOKEN!;
+console.log(gh_token)
 interface Repository {
   id: number;
   name: string;

@@ -56,7 +56,7 @@ export default function SpotifyNowPlayingCard() {
       <div className="flex flex-col md:flex-row">
         {/* Album Cover */}
         <div className="md:w-1/3 relative group">
-          <Image
+          <img
             src={data.albumImageUrl || "/api/placeholder/300/300"}
             alt={`${data.title} album art`}
             className="w-full h-full max-h-[200px] object-cover"
