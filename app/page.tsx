@@ -1,30 +1,67 @@
 "use client";
 
 import type React from "react";
-import growth from '../public/Growth.svg'
-import code from '../public/code.svg'
-import prog from '../public/prog.svg'
-import self from '../public/self.jpg'
+import code from "../public/illustrations/code.svg";
+import hn from "../public/projects/hn.png";
+import pharmora from "../public/projects/pharmora.jpg";
+import insurefi from "../public/projects/insurefi.jpg";
+
+import self from "../public/people/self.jpg";
 import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Github, Linkedin, Mail } from "lucide-react";
-import VerticalCutReveal from "@/fancy/components/text/vertical-cut-reveal";
-import Typewriter from "@/fancy/components/text/typewriter";
+import Typewriter from "@/components/ui/typewriter";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import SkillsSection from "@/components/skills-section";
+import OtherProjects from "@/components/other-projects";
+import NowPlayingCard from "@/components/now-playing";
 
 export default function Portfolio() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const res = await fetch("https://formspree.io/f/mrbpdgzv", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: new FormData(e.target as HTMLFormElement),
+    });
+
+    const result = await res.json();
+
+    if (result.ok) {
+      setStatus("Thanks! Your message has been sent.");
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      setStatus("Oops! Something went wrong.");
+    }
+  };
   const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [underlineStyle, setUnderlineStyle] = useState({
     left: "0",
     width: "0",
   });
-  const [currentCertificate, setCurrentCertificate] = useState(0);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navBarRef = useRef<{ [key: string]: HTMLLIElement | null }>({});
 
-  // Refs for navbar items
   const navRefs = {
     home: useRef<HTMLLIElement>(null),
     about: useRef<HTMLLIElement>(null),
@@ -34,7 +71,22 @@ export default function Portfolio() {
     testimonials: useRef<HTMLLIElement>(null),
     contact: useRef<HTMLLIElement>(null),
   };
-
+  const testimonials = [
+    {
+      name: "Chiranjeet Samal",
+      designation: "Video Editor",
+      image:'/people/chiranjeet.jpg',
+      content:
+        "Satyam Jha is a talented web developer and a great friend. He’s reliable, creative, and always delivers clean, efficient work. If you need someone who knows their stuff and genuinely cares about the outcome, he’s your guy.",
+    },
+    {
+      name: "Dr. V. Muthumanikandan",
+      designation: "Professor, Faculty Co-ordinator @ Hackclub",
+      image: '/people/muthusir.jpg',
+      content:
+        "Satyam Jha has been an invaluable part of HackClub. He led the development of the HackNight website, contributed to the club’s official website, and consistently supported the successful execution of multiple events. His technical skills, reliability, and collaborative attitude make him a standout member of the club.",
+    },
+  ];
   // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -68,7 +120,7 @@ export default function Portfolio() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Update underline position when active section changes
+  // UNDERLINE LOGIC
   useEffect(() => {
     const activeButton = navBarRef.current[activeSection];
     if (activeButton) {
@@ -79,7 +131,7 @@ export default function Portfolio() {
     }
   }, [activeSection]);
 
-  // Apply dark mode class to body
+// DARK MODE
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -94,13 +146,27 @@ export default function Portfolio() {
         darkMode ? "dark bg-[#1e2124] text-white" : "bg-white text-gray-900"
       }`}
     >
-      <link href="https://unpkg.com/pattern.css" rel="stylesheet"></link>
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-40 border-b-2 border-b-[#e63946] px-6 py-4 transition-colors duration-300 bg-white/80 dark:bg-[#1b1d21cc] backdrop-blur-sm">
         <div className="flex items-center justify-between mx-auto">
-          <h1 className="text-xl font-bold">
-            <span className="text-[#e63946]">Satyam</span> Jha
-          </h1>
+          <div className="px-4 relative h-14 w-[4.5rem]">
+            {darkMode && (
+              <Image
+                fill
+                src={"/logowhite.png"}
+                className="scale-125"
+                alt="logo"
+              />
+            )}
+            {!darkMode && (
+              <Image
+                fill
+                src={"/logodark.png"}
+                className="scale-125"
+                alt="logo"
+              />
+            )}
+          </div>
 
           <div className="relative flex items-center">
             <ul className="hidden min-[870px]:flex items-center space-x-8 mr-8">
@@ -211,12 +277,12 @@ export default function Portfolio() {
         ))}
       </div>
       {/* Main Content */}
-      <main className="mx-auto pt-[4.2rem]">
+      <main className="mx-auto pt-[5.2rem]">
         {/* Hero Section */}
         <section
           id="hero"
           ref={navRefs.home}
-          className="min-h-screen min-w-full bg-[url(/blob.svg)] bg-cover flex flex-col bg-opacity-85 justify-center items-center text-center px-4 relative"
+          className="min-h-screen min-w-full md:bg-[url(/illustrations/wave-bg.svg)] bg-cover flex flex-col bg-opacity-85 justify-center items-center text-center px-4 relative"
         >
           <div className="animate-fade-in-up w-full relative">
             <Image
@@ -255,7 +321,7 @@ export default function Portfolio() {
                 size={"lg"}
                 variant={"outline"}
                 onClick={() => scrollToSection("works")}
-                className="px-2 me-4 !py-6 text-lg text-[#d63836] dark:bg-transparent border-[#d63836] rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+                className="px-6 me-4 !py-6 text-lg text-[#d63836] dark:bg-transparent border-[#d63836] rounded-[8px] hover:bg-[#d62836] dark:hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
               >
                 View my Work
               </Button>
@@ -263,7 +329,7 @@ export default function Portfolio() {
                 variant={"outline"}
                 size={"lg"}
                 onClick={() => scrollToSection("contact")}
-                className="px-2 !py-6 bg-[#e63946] text-lg text-white  rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+                className="px-6 !py-6 bg-[#e63946] text-lg text-white  rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
               >
                 Hire Me
               </Button>
@@ -292,7 +358,7 @@ export default function Portfolio() {
         <section
           id="about"
           ref={navRefs.about}
-          className="min-h-screen flex flex-col justify-center py-16 px-4"
+          className="min-h-screen flex flex-col justify-center py-16 px-4 dark:bg-[#1b1d21cc]"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
             About <span className="text-[#e63946]">Me</span>
@@ -308,46 +374,90 @@ export default function Portfolio() {
 
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
               <p>
-                Hey! I’m Satyam Jha — a second-year Computer Science and
-                Engineering student at VIT Chennai, curious full stack
-                developer, freelancer, and someone who loves building things
-                that blend clean design with real-world usefulness.
+                Hey! I’m <span className="text-[#d62836]">Satyam Jha</span> aka{" "}
+                <span className="text-[#d62836]">th3-ma3stro</span> — a
+                second-year{" "}
+                <span className="text-[#d62836]">Computer Science</span> &{" "}
+                <span className="text-[#d62836]">Engineering</span> student at{" "}
+                <span className="text-[#d62836]">VIT Chennai</span>, curious{" "}
+                <span className="text-[#d62836]">Full Stack Developer</span>,{" "}
+                <span className="text-[#d62836]">Freelancer</span>, and someone
+                who loves building things that blend clean design with
+                real-world usefulness.
               </p>
+
               <p>
                 But honestly, this journey started way before college. Back in
                 school — around Class 8 and 9 — I stumbled into the world of
-                development through XDA Developers. Owning the legendary
-                "Santoni" (if you know, you know!) pulled me deep into Android
-                development — flashing custom ROMs, tweaking kernels, and
+                development through{" "}
+                <span className="text-[#d62836]">XDA Developers</span>. Owning
+                the legendary "Santoni" (if you know, you know!) pulled me deep
+                into <span className="text-[#d62836]">Android Development</span>{" "}
+                — flashing <span className="text-[#d62836]">Custom ROMs</span>,
+                tweaking <span className="text-[#d62836]">Kernels</span>, and
                 figuring out how to push every bit of performance out of my
                 phone. That’s where the obsession really began.
               </p>
+
               <p>
-                Fast forward to today: I’ve swapped Android kernels for
-                full-stack web development, and I now work with technologies
-                like Next.js, Rust, and TypeScript to build scalable and smooth
-                digital experiences. Alongside personal and freelance projects,
-                I’m always trying to balance the technical side of life with
-                things I enjoy — like zoning out to music or showing up at the
-                gym. Along the way, I’ve had some really cool opportunities to
-                test my skills and work with talented teams, including:
-                <ul className="text-lg space-y-2 py-2 text-gray-700 dark:text-gray-300">
-                  <li>
-                    🏆 Securing 1st Runner-Up at Intel GenAI Hackathon 2024
-                  </li>
-                  <li>
-                    🏆 Making it to the Top 4 at the Accenture Innovations
-                    Challenge 2024
-                  </li>
-                  <li> 🏆 Winning Best Unique Aptos dApp at Defy 2025 </li>
-                </ul>
-                All of this has taught me that the real fun lies not just in
-                building things, but in constantly learning, collaborating, and
-                pushing past limitations. Whether it’s experimenting on a
-                weekend project, contributing to a hackathon, or working with
-                clients as a freelancer — I’m always excited about what I get to
-                build next.
+                Fast forward to today: I’ve swapped Android kernels for{" "}
+                <span className="text-[#d62836]">
+                  Full-Stack Web Development
+                </span>
+                , and I now work with technologies like{" "}
+                <span className="text-[#d62836]">Next.js</span>,{" "}
+                <span className="text-[#d62836]">Rust</span>, and{" "}
+                <span className="text-[#d62836]">TypeScript</span> to build
+                scalable and smooth digital experiences. Alongside{" "}
+                <span className="text-[#d62836]">Personal Projects</span> and{" "}
+                <span className="text-[#d62836]">Freelance Work</span>, I’m
+                always trying to balance the technical side of life with things
+                I enjoy — like zoning out to{" "}
+                <span className="text-[#d62836]">Music</span> or showing up at
+                the <span className="text-[#d62836]">Gym</span>.
               </p>
+
+              <p>
+                Along the way, I’ve had some really cool opportunities to test
+                my skills and work with talented teams, including:
+              </p>
+
+              <ul className="text-lg space-y-2 py-2 text-gray-700 dark:text-gray-300">
+                <li>
+                  🏆 Securing{" "}
+                  <span className="text-[#d62836]">1st Runner-Up</span> at{" "}
+                  <span className="text-[#d62836]">
+                    Intel GenAI Hackathon 2024
+                  </span>
+                </li>
+                <li>
+                  🏆 Making it to the{" "}
+                  <span className="text-[#d62836]">Top 4</span> at the{" "}
+                  <span className="text-[#d62836]">
+                    Accenture Innovations Challenge 2024
+                  </span>
+                </li>
+                <li>
+                  🏆 Winning{" "}
+                  <span className="text-[#d62836]">Best Unique Aptos dApp</span>{" "}
+                  at <span className="text-[#d62836]">Defy 2025</span>
+                </li>
+              </ul>
+
+              <p>
+                All of this has taught me that the real fun lies not just in
+                building things, but in constantly{" "}
+                <span className="text-[#d62836]">Learning</span>,{" "}
+                <span className="text-[#d62836]">Collaborating</span>, and
+                pushing past limitations . Whether it’s experimenting on a{" "}
+                <span className="text-[#d62836]">Weekend Project</span>,
+                contributing to a{" "}
+                <span className="text-[#d62836]">Hackathon</span>, or working
+                with clients as a{" "}
+                <span className="text-[#d62836]">Freelancer</span> — I’m always
+                excited about what I get to build next.
+              </p>
+              <NowPlayingCard />
             </div>
           </div>
         </section>
@@ -356,90 +466,12 @@ export default function Portfolio() {
         <section
           id="skills"
           ref={navRefs.skills}
-          className="min-h-screen flex flex-col justify-center py-16 px-4 bg-gray-50 dark:bg-gray-800/50"
+          className="min-h-screen bg-gray-200 flex flex-col justify-center py-16 px-4 dark:bg-[#1b1d21cc]"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
             My <span className="text-[#e63946]">Skills</span>
           </h2>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#e63946]">
-                  Languages
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "C++",
-                    "C",
-                    "Python",
-                    "JavaScript",
-                    "TypeScript",
-                    "Rust",
-                  ].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm transition-transform duration-300 hover:scale-105 hover:shadow-md"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#e63946]">
-                  Frontend
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {["ReactJS", "NextJS", "HTML", "CSS", "Sass", "EJS"].map(
-                    (skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm transition-transform duration-300 hover:scale-105 hover:shadow-md"
-                      >
-                        {skill}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#e63946]">
-                  Backend
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Django", "Flask", "ExpressJS", "Encore", "Bun"].map(
-                    (skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm transition-transform duration-300 hover:scale-105 hover:shadow-md"
-                      >
-                        {skill}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold mb-4 text-[#e63946]">
-                  Tools
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Git", "GitHub", "Postman", "ChatGPT"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm transition-transform duration-300 hover:scale-105 hover:shadow-md"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <SkillsSection />
         </section>
         <section
           data-section="resume"
@@ -567,7 +599,7 @@ export default function Portfolio() {
         <section
           id="works"
           ref={navRefs.works}
-          className="min-h-screen flex flex-col justify-center py-16 px-4"
+          className="min-h-screen flex flex-col justify-center py-16 px-4 dark:bg-[#1b1d21cc]"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
             My <span className="text-[#e63946]">Works</span>
@@ -575,23 +607,10 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Project 1 */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <div className="text-4xl text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-16 h-16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                    />
-                  </svg>
+                <div className="text-4xl text-gray-400 overflow-clip">
+                  <Image src={pharmora} alt="pharmora"></Image>
                 </div>
               </div>
               <div className="p-6">
@@ -613,23 +632,10 @@ export default function Portfolio() {
             </div>
 
             {/* Project 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                 <div className="text-4xl text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-16 h-16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                    />
-                  </svg>
+                  <Image src={insurefi} alt="pharmora"></Image>
                 </div>
               </div>
               <div className="p-6">
@@ -651,23 +657,10 @@ export default function Portfolio() {
             </div>
 
             {/* Project 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                 <div className="text-4xl text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-16 h-16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                    />
-                  </svg>
+                  <Image src={hn} alt="pharmora"></Image>
                 </div>
               </div>
               <div className="p-6">
@@ -701,341 +694,42 @@ export default function Portfolio() {
             </div>
           </div>
         </section>
-
-        {/* Certificates Section */}
-        <section
-          id="certificates"
-          ref={navRefs.certificates}
-          className="min-h-screen flex flex-col justify-center py-16 px-4 bg-gray-50 dark:bg-gray-800/50"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            My <span className="text-[#e63946]">Certificates</span>
-          </h2>
-
-          <div className="max-w-4xl mx-auto relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${currentCertificate * 100}%)`,
-                }}
-              >
-                {/* Certificate 1 */}
-                <div className="w-full flex-shrink-0 px-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                    <div className="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-4xl text-gray-400">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-16 h-16"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1}
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">
-                        Intel GenAI Hackathon
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        1st Runner-Up
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                        2024
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Certificate 2 */}
-                <div className="w-full flex-shrink-0 px-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                    <div className="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-4xl text-gray-400">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-16 h-16"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1}
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">
-                        Accenture Innovations Challenge
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Finalist
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                        2024
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Certificate 3 */}
-                <div className="w-full flex-shrink-0 px-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                    <div className="h-64 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-4xl text-gray-400">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-16 h-16"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1}
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">Defy 2025</h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Best Unique Aptos dApp
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                        2024
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Carousel Controls */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentCertificate(index)}
-                  className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                    currentCertificate === index
-                      ? "bg-[#e63946]"
-                      : "bg-gray-300 dark:bg-gray-600"
-                  }`}
-                  aria-label={`Go to certificate ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() =>
-                setCurrentCertificate((prev) => (prev === 0 ? 2 : prev - 1))
-              }
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
-              aria-label="Previous certificate"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            <button
-              onClick={() =>
-                setCurrentCertificate((prev) => (prev === 2 ? 0 : prev + 1))
-              }
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
-              aria-label="Next certificate"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </section>
+        <OtherProjects />
 
         {/* Testimonials Section */}
         <section
           id="testimonials"
           ref={navRefs.testimonials}
-          className="min-h-screen flex flex-col justify-center py-16 px-4"
+          className="min-h-screen flex flex-col justify-center py-16 px-4 dark:bg-[#1b1d21cc]"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Client <span className="text-[#e63946]">Testimonials</span>
+            <span className="text-[#e63946]">Testimonials</span>
           </h2>
 
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Testimonial 1 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
+              {testimonials.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-white dark:bg-[#2d2d2d] p-8 rounded-lg shadow-lg"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-full relative bg-gray-200 dark:bg-[#5c5c5c] flex items-center justify-center mr-4">
+                      <Image src={item.image} className="rounded-full" fill alt="chiru"/>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{item.name}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {item.designation}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">Rahul Sharma</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      CEO, TechInnovate
-                    </p>
-                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 italic">
+                    "{item.content}"
+                  </p>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Satyam delivered an exceptional web application for our
-                  company. His attention to detail and problem-solving skills
-                  are impressive. The project was completed ahead of schedule
-                  and exceeded our expectations."
-                </p>
-              </div>
-
-              {/* Testimonial 2 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Priya Patel</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Founder, HealthTech Solutions
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Working with Satyam on our healthcare platform was a great
-                  experience. His technical expertise in both frontend and
-                  backend development helped us create a seamless user
-                  experience. Highly recommended!"
-                </p>
-              </div>
-
-              {/* Testimonial 3 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Arjun Mehta</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      CTO, BlockChain Ventures
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Satyam's knowledge of blockchain technology is impressive. He
-                  helped us develop a secure and efficient smart contract
-                  system. His ability to explain complex concepts in simple
-                  terms made the collaboration smooth."
-                </p>
-              </div>
-
-              {/* Testimonial 4 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Neha Gupta</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Product Manager, AI Solutions
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "We hired Satyam to integrate AI capabilities into our
-                  existing platform. His innovative approach and deep
-                  understanding of AI technologies helped us create a product
-                  that stands out in the market."
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -1094,7 +788,7 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"
@@ -1105,7 +799,9 @@ export default function Portfolio() {
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
                   placeholder="Your Name"
                   required
                 />
@@ -1121,7 +817,9 @@ export default function Portfolio() {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
                   placeholder="your.email@example.com"
                   required
                 />
@@ -1137,7 +835,9 @@ export default function Portfolio() {
                 <textarea
                   id="message"
                   rows={5}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
                   placeholder="Your message here..."
                   required
                 ></textarea>
@@ -1149,7 +849,15 @@ export default function Portfolio() {
               >
                 Send Message
               </button>
+              {status && <p>{status}</p>}
             </form>
+          </div>
+        </section>
+        <section id="footer">
+          <div className="border-t-2 border-[#e63946]">
+            <p className="text-center py-5">
+              Designed and Developed by Satyam Jha ©️ 2025
+            </p>
           </div>
         </section>
       </main>
