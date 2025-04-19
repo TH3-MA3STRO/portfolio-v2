@@ -5,7 +5,7 @@ import { Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react";
 const inter = Montserrat({ subsets: ["latin"] })
 // app/layout.tsx
-export const metadata:Metadata = {
+export const metadata: Metadata = {
   title: "Satyam Jha | Full Stack Developer & HackClub VIT President",
   description:
     "I'm Satyam Jha — a full stack developer, open-source enthusiast, and President of HackClub VIT Chennai. Explore my projects, hackathon achievements, freelance work, and developer journey.",
@@ -21,16 +21,16 @@ export const metadata:Metadata = {
     "InsureFi",
     "Hackathon Projects",
   ],
-  metadataBase: new URL("https://satyamjha-dev.xyz"),
+  metadataBase: new URL("https://www.satyamjha-dev.xyz"),
   openGraph: {
     title: "Satyam Jha | Full Stack Developer",
     description:
       "Check out my developer portfolio, hackathon wins, and projects like Pharmora and InsureFi. Built with Next.js, Rust, and passion.",
-    url: "https://satyamjha-dev.xyz",
+    url: "https://www.satyamjha-dev.xyz",
     siteName: "Satyam Jha Portfolio",
     images: [
       {
-        url: "https://satyamjha-dev.xyz/preview.jpg", // recommended 1200x630
+        url: "https://www.satyamjha-dev.xyz/preview.jpg", // recommended 1200x630
         width: 1200,
         height: 630,
         alt: "Satyam Jha Portfolio Preview",
@@ -44,10 +44,10 @@ export const metadata:Metadata = {
     title: "Satyam Jha | Full Stack Developer",
     description:
       "HackClub VIT President | Full Stack Dev | Rust & Next.js | Hackathons | Freelance | Pharmora, InsureFi, and more.",
-    images: ["https://satyamjha-dev.xyz/preview.jpg"],
+    images: ["https://www.satyamjha-dev.xyz/preview.jpg"],
     creator: "@th3_ma3stro",
   },
-  authors: [{ name: "Satyam Jha", url: "https://satyamjha-dev.xyz" }],
+  authors: [{ name: "Satyam Jha", url: "https://www.satyamjha-dev.xyz" }],
   creator: "Satyam Jha",
   publisher: "Satyam Jha",
   themeColor: "#e63946",
