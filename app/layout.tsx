@@ -2,10 +2,10 @@ import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
-
+import { Analytics } from "@vercel/analytics/react";
 const inter = Montserrat({ subsets: ["latin"] })
 // app/layout.tsx
-export const metadata = {
+export const metadata:Metadata = {
   title: "Satyam Jha | Full Stack Developer & HackClub VIT President",
   description:
     "I'm Satyam Jha — a full stack developer, open-source enthusiast, and President of HackClub VIT Chennai. Explore my projects, hackathon achievements, freelance work, and developer journey.",
@@ -62,7 +62,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>{children}
+        <Analytics />
+      </body>
     </html>
   )
 }
