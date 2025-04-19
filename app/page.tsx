@@ -408,13 +408,16 @@ export default function Portfolio() {
                 <span className="text-[#d62836]">Next.js</span>,{" "}
                 <span className="text-[#d62836]">Rust</span>, and{" "}
                 <span className="text-[#d62836]">TypeScript</span> to build
-                scalable and smooth digital experiences. Alongside{" "}
+                scalable and smooth digital experiences. I also have a keen
+                interest in <span className="text-[#d62836]">Web3</span> and{" "}
+                <span className="text-[#d62836]">Blockchain technologies</span>.{" "}
+                Alongside{" "}
                 <span className="text-[#d62836]">Personal Projects</span> and{" "}
                 <span className="text-[#d62836]">Freelance Work</span>, I’m
                 always trying to balance the technical side of life with things
                 I enjoy — like zoning out to{" "}
-                <span className="text-[#d62836]">Music</span> or showing up at
-                the <span className="text-[#d62836]">Gym</span>.
+                <span className="text-[#d62836]">Music</span>🐉⚔ or showing up
+                at the <span className="text-[#d62836]">Gym</span>.
               </p>
 
               <p>
@@ -716,7 +719,12 @@ export default function Portfolio() {
                 >
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 rounded-full relative bg-gray-200 dark:bg-[#5c5c5c] flex items-center justify-center mr-4">
-                      <Image src={item.image} className="rounded-full" fill alt="chiru"/>
+                      <Image
+                        src={item.image}
+                        className="rounded-full"
+                        fill
+                        alt="chiru"
+                      />
                     </div>
                     <div>
                       <h3 className="font-semibold">{item.name}</h3>
