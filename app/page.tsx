@@ -1,29 +1,38 @@
 "use client";
 
 import type React from "react";
-
+import growth from '../public/Growth.svg'
+import code from '../public/code.svg'
+import prog from '../public/prog.svg'
+import self from '../public/self.jpg'
 import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Github, Linkedin, Mail } from "lucide-react";
+import VerticalCutReveal from "@/fancy/components/text/vertical-cut-reveal";
+import Typewriter from "@/fancy/components/text/typewriter";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Portfolio() {
   const [darkMode, setDarkMode] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
-  const [underlineStyle, setUnderlineStyle] = useState({ left: "0", width: "0" });
+  const [activeSection, setActiveSection] = useState("home");
+  const [underlineStyle, setUnderlineStyle] = useState({
+    left: "0",
+    width: "0",
+  });
   const [currentCertificate, setCurrentCertificate] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
 
   const navBarRef = useRef<{ [key: string]: HTMLLIElement | null }>({});
 
   // Refs for navbar items
   const navRefs = {
-    hero: useRef<HTMLLIElement>(null),
+    home: useRef<HTMLLIElement>(null),
     about: useRef<HTMLLIElement>(null),
     skills: useRef<HTMLLIElement>(null),
     works: useRef<HTMLLIElement>(null),
+
     testimonials: useRef<HTMLLIElement>(null),
-    certificates: useRef<HTMLLIElement>(null),
-    connect: useRef<HTMLLIElement>(null),
+    contact: useRef<HTMLLIElement>(null),
   };
 
   // Toggle dark mode
@@ -42,8 +51,7 @@ export default function Portfolio() {
       const scrollPosition = window.scrollY + 100; // Offset for better UX
 
       for (const section in navRefs) {
-        const element =
-          navRefs[section as keyof typeof navRefs].current;
+        const element = navRefs[section as keyof typeof navRefs].current;
         if (element) {
           const { offsetTop, offsetHeight } = element;
           if (
@@ -71,7 +79,6 @@ export default function Portfolio() {
     }
   }, [activeSection]);
 
-
   // Apply dark mode class to body
   useEffect(() => {
     if (darkMode) {
@@ -83,12 +90,13 @@ export default function Portfolio() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
+      className={`min-h-screen min-w-full transition-colors duration-300 ${
         darkMode ? "dark bg-[#1e2124] text-white" : "bg-white text-gray-900"
       }`}
     >
+      <link href="https://unpkg.com/pattern.css" rel="stylesheet"></link>
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4 transition-colors duration-300 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+      <nav className="fixed top-0 left-0 right-0 z-40 border-b-2 border-b-[#e63946] px-6 py-4 transition-colors duration-300 bg-white/80 dark:bg-[#1b1d21cc] backdrop-blur-sm">
         <div className="flex items-center justify-between mx-auto">
           <h1 className="text-xl font-bold">
             <span className="text-[#e63946]">Satyam</span> Jha
@@ -111,7 +119,9 @@ export default function Portfolio() {
                     scrollToSection(item);
                   }}
                 >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {item.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+                    letter.toUpperCase()
+                  )}
                 </li>
               ))}
             </ul>
@@ -127,7 +137,7 @@ export default function Portfolio() {
             {/* Dark mode toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2  rounded-full transition-colors  duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 mr-2 relative"
+              className="p-2  rounded-full transition-colors  duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 mr-2 relative"
               aria-label="Toggle dark mode"
             >
               {darkMode ? (
@@ -136,14 +146,7 @@ export default function Portfolio() {
                 <Moon className="w-5 h-5" />
               )}
             </button>
-            <button
 
-              className="group relative px-2 py-1 rounded-md bg-transparent border-2 border-blue-400 text-blue-400 dark:text-white overflow-hidden transition-all duration-300 hover:text-white hover:bg-transparent
-                  after:content-[''] after:absolute after:top-0 after:left-0 after:right-0 after:z-[-212] after:h-0 after:w-full after:bg-blue-400 after:rounded-b-[50%] after:transition-[height,width] after:duration-1000
-                  hover:after:h-[200%]"
-            >
-              Hire Me
-            </button>
             <button
               className="flex min-[870px]:hidden p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
               onClick={() => setIsMobileMenuOpen(true)}
@@ -208,48 +211,68 @@ export default function Portfolio() {
         ))}
       </div>
       {/* Main Content */}
-      <main className="container mx-auto pt-24">
+      <main className="mx-auto pt-[4.2rem]">
         {/* Hero Section */}
         <section
           id="hero"
-          ref={navRefs.hero}
-          className="min-h-screen flex flex-col justify-center items-center text-center px-4 relative"
+          ref={navRefs.home}
+          className="min-h-screen min-w-full bg-[url(/blob.svg)] bg-cover flex flex-col bg-opacity-85 justify-center items-center text-center px-4 relative"
         >
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"></div>
-            <div className="absolute inset-0 opacity-10 dark:opacity-20">
-              {/* Abstract geometric shapes */}
-              <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-[#e63946] blur-3xl"></div>
-              <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500 blur-3xl"></div>
-            </div>
-          </div>
+          <div className="animate-fade-in-up w-full relative">
+            <Image
+              src={code}
+              width={300}
+              height={300}
+              alt="developer"
+              className="mx-auto  "
+            ></Image>
 
-          <div className="animate-fade-in-up">
-            <h2 className="text-4xl md:text-6xl font-bold mb-4">
-              Hey there, I'm <span className="text-[#e63946]">Satyam Jha</span>
-            </h2>
-            <p className="text-xl md:text-2xl mb-6 text-gray-600 dark:text-gray-300">
-              Full Stack Developer | AI & Blockchain Enthusiast | Freelance
-              Developer
-            </p>
-            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
-              Building modern web experiences using Next.js, Rust, and
-              TypeScript.
+            <h2 className="text-3xl  md:text-6xl font-bold mb-4">
+              Hello there!👋
               <br />
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                Second-year CSE student at VIT Chennai
-              </span>
-            </p>
-            <button
-              onClick={() => scrollToSection("works")}
-              className="px-8 py-3 bg-[#e63946] text-white rounded-md hover:bg-[#d62836] transition-colors duration-300 shadow-lg hover:shadow-xl"
-            >
-              View My Work
-            </button>
-            <div className="mt-12 animate-bounce">
+              I'm <span className="text-[#e63946]">Satyam Jha</span>
+            </h2>
+
+            <div className="text-xl md:text-2xl   text-gray-600 dark:text-gray-300">
+              I am a{" "}
+              <Typewriter
+                text={[
+                  "full stack developer",
+                  "tech enthusiast",
+                  "freelancer",
+                  "geek",
+                ]}
+                speed={70}
+                className="inline text-[#e63946]"
+                waitTime={1500}
+                deleteSpeed={40}
+                cursorChar={"_"}
+              />
+            </div>
+
+            <div className="mx-auto my-6 w-[100%] flex flex-row justify-center ">
+              <Button
+                size={"lg"}
+                variant={"outline"}
+                onClick={() => scrollToSection("works")}
+                className="px-2 me-4 !py-6 text-lg text-[#d63836] dark:bg-transparent border-[#d63836] rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+              >
+                View my Work
+              </Button>
+              <Button
+                variant={"outline"}
+                size={"lg"}
+                onClick={() => scrollToSection("contact")}
+                className="px-2 !py-6 bg-[#e63946] text-lg text-white  rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+              >
+                Hire Me
+              </Button>
+            </div>
+
+            <div className="mt-12 animate-bounce mx-auto w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-[#e63946]"
+                className="h-8 w-8 mx-auto text-[#e63946]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -276,51 +299,54 @@ export default function Portfolio() {
           </h2>
 
           <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
-            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl flex-shrink-0 bg-gray-200 dark:bg-gray-700 mx-auto md:mx-0">
+            <div className="w-48 h-48 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl flex-shrink-0 bg-gray-200 dark:bg-gray-700 mx-auto md:mx-0">
               {/* Placeholder for profile photo */}
               <div className="w-full h-full flex items-center justify-center text-gray-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-24 h-24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+                <Image src={self} alt="a picture of satyam jha"></Image>
               </div>
             </div>
 
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
               <p>
-                I'm Satyam Jha, a passionate Full Stack Developer and an
-                enthusiastic problem solver with a strong foundation in modern
-                web technologies like Next.js, Rust, and TypeScript. As the
-                President of HackClub VIT Chennai, I actively lead a community
-                of like-minded innovators, organizing workshops, speaker
-                sessions, and large-scale hackathons that foster hands-on
-                learning and collaboration.
+                Hey! I’m Satyam Jha — a second-year Computer Science and
+                Engineering student at VIT Chennai, curious full stack
+                developer, freelancer, and someone who loves building things
+                that blend clean design with real-world usefulness.
               </p>
               <p>
-                Throughout my journey, I've had the privilege of competing in
-                and excelling at several national-level hackathons, including
-                securing 1st Runner-Up at the Intel GenAI Hackathon 2024,
-                finishing as a Top 4 Finalist at the Accenture Innovations
-                Challenge 2024, and winning Best Unique Aptos dApp at Defy 2025.
-                These experiences have not only sharpened my technical skills
-                but also strengthened my ability to work efficiently in
-                fast-paced, team-driven environments.
+                But honestly, this journey started way before college. Back in
+                school — around Class 8 and 9 — I stumbled into the world of
+                development through XDA Developers. Owning the legendary
+                "Santoni" (if you know, you know!) pulled me deep into Android
+                development — flashing custom ROMs, tweaking kernels, and
+                figuring out how to push every bit of performance out of my
+                phone. That’s where the obsession really began.
               </p>
               <p>
-                I take pride in building scalable, performance-oriented
-                applications that blend clean design with practical solutions —
-                whether for real-world businesses or academic research, like my
-                work on Pharmora and InsureFi.
+                Fast forward to today: I’ve swapped Android kernels for
+                full-stack web development, and I now work with technologies
+                like Next.js, Rust, and TypeScript to build scalable and smooth
+                digital experiences. Alongside personal and freelance projects,
+                I’m always trying to balance the technical side of life with
+                things I enjoy — like zoning out to music or showing up at the
+                gym. Along the way, I’ve had some really cool opportunities to
+                test my skills and work with talented teams, including:
+                <ul className="text-lg space-y-2 py-2 text-gray-700 dark:text-gray-300">
+                  <li>
+                    🏆 Securing 1st Runner-Up at Intel GenAI Hackathon 2024
+                  </li>
+                  <li>
+                    🏆 Making it to the Top 4 at the Accenture Innovations
+                    Challenge 2024
+                  </li>
+                  <li> 🏆 Winning Best Unique Aptos dApp at Defy 2025 </li>
+                </ul>
+                All of this has taught me that the real fun lies not just in
+                building things, but in constantly learning, collaborating, and
+                pushing past limitations. Whether it’s experimenting on a
+                weekend project, contributing to a hackathon, or working with
+                clients as a freelancer — I’m always excited about what I get to
+                build next.
               </p>
             </div>
           </div>
@@ -413,6 +439,127 @@ export default function Portfolio() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+        <section
+          data-section="resume"
+          className="min-h-screen flex flex-col justify-center items-center px-6 py-16"
+        >
+          <h2 className="text-4xl font-bold mb-6 text-center">
+            <span className="text-[#e63946]">My</span> Resume
+          </h2>
+
+          <p className="text-lg text-center max-w-2xl text-gray-600 dark:text-gray-300 mb-8">
+            Curious about my journey, skills, and achievements? Download or view
+            my full resume to learn more.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            {/* View Resume Button */}
+            <a
+              href="/SatyamJha_Resume.pdf" // Make sure your resume is in the public/ folder
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-6 py-3 rounded-[10px] bg-[#e63946] text-white font-medium hover:bg-[#d62839] transition-colors duration-300 shadow-md"
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              View Resume
+            </a>
+
+            {/* Download Resume Button */}
+            <a
+              href="/SatyamJha_Resume.pdf"
+              download
+              className="flex items-center rounded-[10px] px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 shadow-md"
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 4v16h16V4H4zm4 8h8m-4-4v8"
+                />
+              </svg>
+              Download
+            </a>
+          </div>
+
+          {/* Timeline / Experience Summary */}
+          <div className="max-w-3xl w-full">
+            <h3 className="text-2xl font-semibold mb-6 text-center text-[#e63946]">
+              Experience Highlights
+            </h3>
+            <ol className="relative border-l border-gray-300 dark:border-gray-600">
+              <li className="mb-10 ml-6">
+                <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
+                <h4 className="font-medium leading-tight text-lg">
+                  President — HackClub VIT Chennai
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  2025 – Present
+                </p>
+                <p className="mt-1 text-gray-700 dark:text-gray-300">
+                  Leading tech communities, organizing large-scale hackathons,
+                  and fostering collaborative learning.
+                </p>
+              </li>
+              <li className="mb-10 ml-6">
+                <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
+                <h4 className="font-medium leading-tight text-lg">
+                  Best Unique Aptos dApp — Defy
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Jan 2025
+                </p>
+                <p className="mt-1 text-gray-700 dark:text-gray-300">
+                  Developed an innovative dApp using the Aptos blockchain
+                  ecosystem.
+                </p>
+              </li>
+              <li className="mb-10 ml-6">
+                <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
+                <h4 className="font-medium leading-tight text-lg">
+                  Top 4 — Accenture Innovations Challenge
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Dec 2024
+                </p>
+                <p className="mt-1 text-gray-700 dark:text-gray-300">
+                  Conceptualized scalable solutions with high impact in
+                  real-world tech environments.
+                </p>
+              </li>
+              <li className="ml-6">
+                <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
+                <h4 className="font-medium leading-tight text-lg">
+                  1st Runner-Up — Intel GenAI Hackathon
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Oct 2024
+                </p>
+                <p className="mt-1 text-gray-700 dark:text-gray-300">
+                  Designed AI-powered solutions in real-time, ranked 2nd among
+                  nationwide teams.
+                </p>
+              </li>
+            </ol>
           </div>
         </section>
 
@@ -550,157 +697,6 @@ export default function Portfolio() {
                     GitHub
                   </a>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section
-          id="testimonials"
-          ref={navRefs.testimonials}
-          className="min-h-screen flex flex-col justify-center py-16 px-4"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Client <span className="text-[#e63946]">Testimonials</span>
-          </h2>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Testimonial 1 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Rahul Sharma</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      CEO, TechInnovate
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Satyam delivered an exceptional web application for our
-                  company. His attention to detail and problem-solving skills
-                  are impressive. The project was completed ahead of schedule
-                  and exceeded our expectations."
-                </p>
-              </div>
-
-              {/* Testimonial 2 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Priya Patel</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Founder, HealthTech Solutions
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Working with Satyam on our healthcare platform was a great
-                  experience. His technical expertise in both frontend and
-                  backend development helped us create a seamless user
-                  experience. Highly recommended!"
-                </p>
-              </div>
-
-              {/* Testimonial 3 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Arjun Mehta</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      CTO, BlockChain Ventures
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "Satyam's knowledge of blockchain technology is impressive. He
-                  helped us develop a secure and efficient smart contract
-                  system. His ability to explain complex concepts in simple
-                  terms made the collaboration smooth."
-                </p>
-              </div>
-
-              {/* Testimonial 4 */}
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Neha Gupta</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Product Manager, AI Solutions
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "We hired Satyam to integrate AI capabilities into our
-                  existing platform. His innovative approach and deep
-                  understanding of AI technologies helped us create a product
-                  that stands out in the market."
-                </p>
               </div>
             </div>
           </div>
@@ -893,10 +889,160 @@ export default function Portfolio() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <section
+          id="testimonials"
+          ref={navRefs.testimonials}
+          className="min-h-screen flex flex-col justify-center py-16 px-4"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+            Client <span className="text-[#e63946]">Testimonials</span>
+          </h2>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Testimonial 1 */}
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Rahul Sharma</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      CEO, TechInnovate
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 italic">
+                  "Satyam delivered an exceptional web application for our
+                  company. His attention to detail and problem-solving skills
+                  are impressive. The project was completed ahead of schedule
+                  and exceeded our expectations."
+                </p>
+              </div>
+
+              {/* Testimonial 2 */}
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Priya Patel</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Founder, HealthTech Solutions
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 italic">
+                  "Working with Satyam on our healthcare platform was a great
+                  experience. His technical expertise in both frontend and
+                  backend development helped us create a seamless user
+                  experience. Highly recommended!"
+                </p>
+              </div>
+
+              {/* Testimonial 3 */}
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Arjun Mehta</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      CTO, BlockChain Ventures
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 italic">
+                  "Satyam's knowledge of blockchain technology is impressive. He
+                  helped us develop a secure and efficient smart contract
+                  system. His ability to explain complex concepts in simple
+                  terms made the collaboration smooth."
+                </p>
+              </div>
+
+              {/* Testimonial 4 */}
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Neha Gupta</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Product Manager, AI Solutions
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 italic">
+                  "We hired Satyam to integrate AI capabilities into our
+                  existing platform. His innovative approach and deep
+                  understanding of AI technologies helped us create a product
+                  that stands out in the market."
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* Connect Section */}
         <section
           id="connect"
-          ref={navRefs.connect}
+          ref={navRefs.contact}
           className="min-h-screen flex flex-col justify-center py-16 px-4"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
