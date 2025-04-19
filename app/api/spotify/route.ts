@@ -29,6 +29,18 @@ const getAccessToken = async () => {
 
 export async function GET() {
   try {
+    // Test environment variables first
+    if (!client_id || !client_secret || !refresh_token) {
+      return NextResponse.json({
+        error: "Missing Spotify credentials",
+        details: {
+          hasClientId: !!client_id,
+          hasClientSecret: !!client_secret,
+          hasRefreshToken: !!refresh_token
+        }
+      }, { status: 500 });
+    }
+
     const access_token = await getAccessToken();
 
     const nowPlaying = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
@@ -37,20 +49,27 @@ export async function GET() {
       },
     });
 
+    // Log the status code for debugging
     if (nowPlaying.status === 204 || nowPlaying.status > 400) {
-      return NextResponse.json({ isPlaying: false }, { status: 200 });
+      return NextResponse.json({
+        isPlaying: false,
+        statusCode: nowPlaying.status
+      }, { status: 200 });
     }
 
     const song = await nowPlaying.json();
     return NextResponse.json({
       isPlaying: song.is_playing,
-      title: song.item.name,
-      artist: song.item.artists.map((a: { name: string }) => a.name).join(", "),
-      albumImageUrl: song.item.album.images[0].url,
-      songUrl: song.item.external_urls.spotify,
+      title: song.item?.name,
+      artist: song.item?.artists?.map((a: { name: string }) => a.name).join(", "),
+      albumImageUrl: song.item?.album?.images[0]?.url,
+      songUrl: song.item?.external_urls?.spotify,
     }, { status: 200 });
 
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({
+      error: error.message || "Internal Server Error",
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 }
