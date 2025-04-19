@@ -34,9 +34,9 @@ export async function GET() {
       return NextResponse.json({
         error: "Missing Spotify credentials",
         details: {
-          hasClientId: !!client_id,
-          hasClientSecret: !!client_secret,
-          hasRefreshToken: !!refresh_token
+          hasClientId: !client_id,
+          hasClientSecret: !client_secret,
+          hasRefreshToken: !refresh_token
         }
       }, { status: 500 });
     }
