@@ -5,7 +5,7 @@ import { Loader2, ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
-
+const gh_token = process.env.GITHUB_TOKEN!
 interface Repository {
   id: number;
   name: string;
@@ -35,7 +35,7 @@ export default function OtherProjects() {
           "https://api.github.com/users/th3-ma3stro/repos",
           {
             headers: {
-              Authorization: `token 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`,
+              Authorization: `token ${gh_token}`,
             },
           }
         );
