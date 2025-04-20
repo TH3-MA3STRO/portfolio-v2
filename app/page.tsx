@@ -15,6 +15,8 @@ import Image from "next/image";
 import SkillsSection from "@/components/skills-section";
 import OtherProjects from "@/components/other-projects";
 import NowPlayingCard from "@/components/now-playing";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 
 export default function Portfolio() {
   const [formData, setFormData] = useState({
@@ -783,9 +785,10 @@ export default function Portfolio() {
                 >
                   Name
                 </label>
-                <input
+                <Input
                   type="text"
                   id="name"
+                  name="name"
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
@@ -801,9 +804,10 @@ export default function Portfolio() {
                 >
                   Email
                 </label>
-                <input
+                <Input
                   type="email"
                   id="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
@@ -819,23 +823,24 @@ export default function Portfolio() {
                 >
                   Message
                 </label>
-                <textarea
+                <Textarea
                   id="message"
                   rows={5}
+                  name="message"
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d2d2d] focus:outline-none focus:ring-2 focus:ring-[#e63946] transition-colors duration-300"
                   placeholder="Your message here..."
                   required
-                ></textarea>
+                ></Textarea>
               </div>
 
-              <button
+              <Button
                 type="submit"
                 className="px-6 py-3 bg-[#e63946] text-white rounded-md hover:bg-[#d62836] transition-colors duration-300 shadow-md hover:shadow-lg"
               >
                 Send Message
-              </button>
+              </Button>
               {status && <p>{status}</p>}
             </form>
           </div>
