@@ -318,18 +318,16 @@ export default function Portfolio() {
 
             <div className="mx-auto my-6 w-[100%] flex flex-row justify-center ">
               <Button
-                size={"lg"}
                 variant={"outline"}
                 onClick={() => scrollToSection("works")}
-                className="px-6 me-4 !py-6 text-lg text-[#d63836] dark:bg-transparent border-[#d63836] rounded-[8px] hover:bg-[#d62836] dark:hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+                className="px-4 md:px-6 me-4 !py-6 text-sm md:text-lg text-[#d63836] dark:bg-transparent border-[#d63836] rounded-[8px] hover:bg-[#d62836] dark:hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
               >
                 View my Work
               </Button>
               <Button
                 variant={"outline"}
-                size={"lg"}
                 onClick={() => scrollToSection("contact")}
-                className="px-6 !py-6 bg-[#e63946] text-lg text-white  rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
+                className="px-6 !py-6 bg-[#e63946] text-sm md:text-lg text-white  rounded-[8px] hover:bg-[#d62836] transition-colors duration-300 hover:text-white shadow-lg hover:shadow-xl"
               >
                 Hire Me
               </Button>
@@ -372,7 +370,7 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div className="px-4 space-y-4 text-sm md:text-[16px] text-gray-700 dark:text-gray-300">
               <p>
                 Hey! I’m <span className="text-[#d62836]">Satyam Jha</span> aka{" "}
                 <span className="text-[#d62836]">th3-ma3stro</span> — a
@@ -387,37 +385,32 @@ export default function Portfolio() {
               </p>
 
               <p>
-                But honestly, this journey started way before college. Back in
-                school — around Class 8 and 9 — I stumbled into the world of
-                development through{" "}
+                But honestly, this journey started way before college. back in
+                Class 8 or 9 — I stumbled into the world of development through{" "}
                 <span className="text-[#d62836]">XDA Developers</span>. Owning
                 the legendary "Santoni" (if you know, you know!) pulled me deep
                 into <span className="text-[#d62836]">Android Development</span>{" "}
                 — flashing <span className="text-[#d62836]">Custom ROMs</span>,
                 tweaking <span className="text-[#d62836]">Kernels</span>, and
-                figuring out how to push every bit of performance out of my
-                phone. That’s where the obsession really began.
+                maximizing phone performance. That’s where the obsession really
+                began.
               </p>
 
               <p>
-                Fast forward to today: I’ve swapped Android kernels for{" "}
+                Fast forward to today — I’ve traded Android kernels for
                 <span className="text-[#d62836]">
                   Full-Stack Web Development
                 </span>
-                , and I now work with technologies like{" "}
+                , building scalable digital experiences with{" "}
                 <span className="text-[#d62836]">Next.js</span>,{" "}
                 <span className="text-[#d62836]">Rust</span>, and{" "}
-                <span className="text-[#d62836]">TypeScript</span> to build
-                scalable and smooth digital experiences. I also have a keen
-                interest in <span className="text-[#d62836]">Web3</span> and{" "}
+                <span className="text-[#d62836]">TypeScript</span>. I also have
+                a keen interest in <span className="text-[#d62836]">Web3</span>{" "}
+                and{" "}
                 <span className="text-[#d62836]">Blockchain technologies</span>.{" "}
-                Alongside{" "}
-                <span className="text-[#d62836]">Personal Projects</span> and{" "}
-                <span className="text-[#d62836]">Freelance Work</span>, I’m
-                always trying to balance the technical side of life with things
-                I enjoy — like zoning out to{" "}
-                <span className="text-[#d62836]">Music</span>🐉⚔ or showing up
-                at the <span className="text-[#d62836]">Gym</span>.
+                Beyond personal projects and freelance work, I balance tech life
+                with <span className="text-[#d62836]">Music</span>🐉⚔ and the{" "}
+                <span className="text-[#d62836]">Gym</span>.
               </p>
 
               <p>
@@ -425,7 +418,7 @@ export default function Portfolio() {
                 my skills and work with talented teams, including:
               </p>
 
-              <ul className="text-lg space-y-2 py-2 text-gray-700 dark:text-gray-300">
+              <ul className="text-sm md:text-[16px] space-y-2 py-2 text-gray-700 dark:text-gray-300">
                 <li>
                   🏆 Securing{" "}
                   <span className="text-[#d62836]">1st Runner-Up</span> at{" "}
@@ -446,20 +439,6 @@ export default function Portfolio() {
                   at <span className="text-[#d62836]">Defy 2025</span>
                 </li>
               </ul>
-
-              <p>
-                All of this has taught me that the real fun lies not just in
-                building things, but in constantly{" "}
-                <span className="text-[#d62836]">Learning</span>,{" "}
-                <span className="text-[#d62836]">Collaborating</span>, and
-                pushing past limitations . Whether it’s experimenting on a{" "}
-                <span className="text-[#d62836]">Weekend Project</span>,
-                contributing to a{" "}
-                <span className="text-[#d62836]">Hackathon</span>, or working
-                with clients as a{" "}
-                <span className="text-[#d62836]">Freelancer</span> — I’m always
-                excited about what I get to build next.
-              </p>
               <NowPlayingCard />
             </div>
           </div>
@@ -478,7 +457,7 @@ export default function Portfolio() {
         </section>
         <section
           data-section="resume"
-          className="min-h-screen flex flex-col justify-center items-center px-6 py-16"
+          className=" min-h-screen flex flex-col justify-center items-center px-6 py-16"
         >
           <h2 className="text-4xl font-bold mb-6 text-center">
             <span className="text-[#e63946]">My</span> Resume
@@ -537,14 +516,14 @@ export default function Portfolio() {
           </div>
 
           {/* Timeline / Experience Summary */}
-          <div className="max-w-3xl w-full">
+          <div className="max-w-3xl w-full px-4">
             <h3 className="text-2xl font-semibold mb-6 text-center text-[#e63946]">
               Experience Highlights
             </h3>
             <ol className="relative border-l border-gray-300 dark:border-gray-600">
               <li className="mb-10 ml-6">
                 <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
-                <h4 className="font-medium leading-tight text-lg">
+                <h4 className="font-medium leading-tight text-[16px] md:text-lg">
                   President — HackClub VIT Chennai
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -557,7 +536,7 @@ export default function Portfolio() {
               </li>
               <li className="mb-10 ml-6">
                 <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
-                <h4 className="font-medium leading-tight text-lg">
+                <h4 className="font-medium leading-tight text-[16px] md:text-lg">
                   Best Unique Aptos dApp — Defy
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -570,7 +549,7 @@ export default function Portfolio() {
               </li>
               <li className="mb-10 ml-6">
                 <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
-                <h4 className="font-medium leading-tight text-lg">
+                <h4 className="font-medium leading-tight text-[16px] md:text-lg">
                   Top 4 — Accenture Innovations Challenge
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -583,7 +562,7 @@ export default function Portfolio() {
               </li>
               <li className="ml-6">
                 <span className="absolute flex items-center justify-center w-4 h-4 bg-[#e63946] rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
-                <h4 className="font-medium leading-tight text-lg">
+                <h4 className="font-medium leading-tight text-[16px] md:text-lg">
                   1st Runner-Up — Intel GenAI Hackathon
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -608,11 +587,11 @@ export default function Portfolio() {
             My <span className="text-[#e63946]">Works</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid px-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Project 1 */}
-            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 md:hover:scale-105 md:hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <div className="text-4xl text-gray-400 overflow-clip">
+                <div className="text-4xl h-[192px] w-full relative text-gray-400 overflow-hidden">
                   <Image src={pharmora} alt="pharmora"></Image>
                 </div>
               </div>
@@ -635,9 +614,9 @@ export default function Portfolio() {
             </div>
 
             {/* Project 2 */}
-            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 md:hover:scale-105 md:hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <div className="text-4xl text-gray-400">
+                <div className="text-4xl w-full h-[192px] relative text-gray-400 overflow-hidden">
                   <Image src={insurefi} alt="pharmora"></Image>
                 </div>
               </div>
@@ -660,9 +639,9 @@ export default function Portfolio() {
             </div>
 
             {/* Project 3 */}
-            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="bg-white dark:bg-[#2d2d2d] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 md:hover:scale-105 md:hover:shadow-xl">
               <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <div className="text-4xl text-gray-400">
+                <div className="text-4xl w-full h-[192px] relative text-gray-400 overflow-hidden">
                   <Image src={hn} alt="pharmora"></Image>
                 </div>
               </div>
@@ -709,7 +688,7 @@ export default function Portfolio() {
             <span className="text-[#e63946]">Testimonials</span>
           </h2>
 
-          <div className="max-w-5xl mx-auto">
+          <div className="px-4 max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Testimonial 1 */}
               {testimonials.map((item, index) => (
@@ -751,7 +730,7 @@ export default function Portfolio() {
             Connect <span className="text-[#e63946]">With Me</span>
           </h2>
 
-          <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="px-4 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <h3 className="text-2xl font-semibold">Get In Touch</h3>
               <p className="text-gray-600 dark:text-gray-300">
