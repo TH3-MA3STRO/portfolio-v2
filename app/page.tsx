@@ -400,7 +400,7 @@ export default function Portfolio() {
 
               <p>
                 Fast forward to today — I’ve traded Android kernels for
-                <span className="text-[#d62836]">
+                {" "}<span className="text-[#d62836]">
                   Full-Stack Web Development
                 </span>
                 , building scalable digital experiences with{" "}

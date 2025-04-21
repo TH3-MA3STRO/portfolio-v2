@@ -29,7 +29,7 @@ export default function SpotifyNowPlayingCard() {
     };
 
     fetchNowPlaying();
-    const interval = setInterval(fetchNowPlaying, 30000); // Update every 30 sec
+    const interval = setInterval(fetchNowPlaying, 120000); // Update every 30 sec
     return () => clearInterval(interval);
   }, []);
 
@@ -44,7 +44,8 @@ export default function SpotifyNowPlayingCard() {
   if (!data || !data.isPlaying) {
     return (
       <div className="bg-white dark:bg-black  mx-auto md:mx-0  text-gray-700 dark:text-gray-300 rounded-lg p-6 shadow-lg w-full max-w-[16rem] md:max-w-md border border-gray-200 dark:border-gray-800">
-        <div className="text-center">
+        <div className="text-center flex flex-row items-center">
+          <Image src={'/logos/spotify.svg'} width={128} height={128} alt="spotify logo"/>
           <p className="text-lg font-medium">Not playing anything right now</p>
         </div>
       </div>
