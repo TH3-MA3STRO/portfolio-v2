@@ -92,6 +92,8 @@ export default function Portfolio() {
   // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark", !darkMode);
+    localStorage.setItem("theme", !darkMode ? "dark" : "light");
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -121,7 +123,21 @@ export default function Portfolio() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  useEffect(() => {
+    // Check for stored preference
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setDarkMode(storedTheme === "dark");
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      setDarkMode(prefersDark);
+      // document.documentElement.classList.toggle("dark", prefersDark);
+    }
+  }, []);
   // UNDERLINE LOGIC
   useEffect(() => {
     const activeButton = navBarRef.current[activeSection];
